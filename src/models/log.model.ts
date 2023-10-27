@@ -1,29 +1,36 @@
-import { Log } from '../../types';
-import { LogLevel } from '../utils/enums';
-
+import { Log } from "../../types";
+import { LogLevel } from "../utils/enums";
 
 export class LogModel {
-
-    static generate(env: string, appName: string, appVersion: string, requestId: string, logLevel: LogLevel, message: string = '', data: any = {}) {
-        return new LogModel(env, appName, appVersion, requestId, logLevel);
+    static generate(
+        requestId: string,
+        logLevel: LogLevel,
+        message: string = "",
+        data: any = {},
+    ) {
+        return new LogModel(requestId, logLevel);
     }
 
     private _log: Log;
 
-    constructor(env: string, appName: string, appVersion: string, requestId: string, logLevel: LogLevel, message: string = '', data: any = {}) {
+    constructor(
+        requestId: string,
+        logLevel: LogLevel,
+        message: string = "",
+        data: any = {},
+    ) {
         this._log = {
-            env: env,
             time: new Date(),
-            appName: appName,
-            appVersion: appVersion,
             requestId: requestId,
             logLevel: logLevel,
             message: message,
             data: data,
-        }
+        };
     }
 
-    get log(): Log { return this._log; }
+    get log(): Log {
+        return this._log;
+    }
 
     requestBody(val: any): LogModel {
         this._log.requestBody = val;
@@ -64,7 +71,7 @@ export class LogModel {
         if (!startTime) {
             return this;
         }
-        this._log.duration = (this._log.time.getTime() - startTime.getTime());
+        this._log.duration = this._log.time.getTime() - startTime.getTime();
         return this;
     }
 

@@ -1,13 +1,10 @@
 {
     "name": "simple-express-request-logger",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Request logging for express applications",
     "main": "dist/index.js",
     "types": "types/index.d.ts",
-    "files": [
-        "/dist",
-        "/types"
-    ],
+    "files": ["/dist", "/types"],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc -p tsconfig.json"
@@ -16,9 +13,7 @@
         "type": "git",
         "url": "git+https://github.com/manas99/express-request-logger.git"
     },
-    "keywords": [
-        "express"
-    ],
+    "keywords": ["express"],
     "author": "Manas Oswal",
     "license": "MIT License",
     "bugs": {

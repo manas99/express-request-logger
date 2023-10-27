@@ -4,12 +4,13 @@ import { RequestLoggerConfig } from "../../types";
 import { generateRandomUUID } from "../utils/helpers";
 import { LogModel } from "../models/log.model";
 
-
 export class RequestLoggerService {
-
     private static _instance: RequestLoggerService;
     static getInstance(config: RequestLoggerConfig): RequestLoggerService {
-        return this._instance || (this._instance = new RequestLoggerService(config));
+        return (
+            this._instance ||
+            (this._instance = new RequestLoggerService(config))
+        );
     }
 
     private _appName: string;
@@ -22,7 +23,8 @@ export class RequestLoggerService {
         this._appName = config.applicationName;
         this._appVersion = config.applicationVersion;
         this._environment = config.environment;
-        this._generateRequestID = config.generateRequestId || generateRandomUUID;
+        this._generateRequestID =
+            config.generateRequestId || generateRandomUUID;
         this._logHandlers = config.logHandlers || [];
     }
 
@@ -47,7 +49,12 @@ export class RequestLoggerService {
 
     commitLog(log: LogModel) {
         for (let _handler of this._logHandlers) {
-            _handler.handle(log.log);
+            _handler.handle({
+                ...log.log,
+                appName: this._appName,
+                appVersion: this._appVersion,
+                env: this._environment,
+            });
         }
     }
 }
